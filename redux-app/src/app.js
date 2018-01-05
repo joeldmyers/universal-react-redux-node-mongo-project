@@ -4,10 +4,11 @@ import {createStore} from 'redux';
 
 // step 3 define reducers
 
-const reducer = function(state={}, action) {
+const reducer = function(state=[], action) {
   switch(action.type) {
     case "POST_BOOK":
-      return action.payload;
+      let books = state.concat(action.payload);
+      return books;
       break;
 
   }
@@ -28,11 +29,30 @@ store.subscribe(function() {
 store.dispatch({
   type:"POST_BOOK",
   payload:
-    {
+    [{
       id: 1,
       title: 'book title',
       description: 'book description here',
       price: 33.33
 
-    }
+    },
+    {
+      id: 2,
+      title: 'second book title',
+      description: 'second book description here',
+      price: 50.00
+
+    }]
   });
+
+  store.dispatch({
+    type:"POST_BOOK",
+    payload:
+      [{
+        id: 3,
+        title: '3rd book title',
+        description: '3rd book description here',
+        price: 100
+
+      }]
+    });

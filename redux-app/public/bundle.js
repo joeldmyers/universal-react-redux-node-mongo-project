@@ -704,12 +704,13 @@ var _redux = __webpack_require__(8);
 // step 3 define reducers
 
 var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments[1];
 
   switch (action.type) {
     case "POST_BOOK":
-      return action.payload;
+      var books = state.concat(action.payload);
+      return books;
       break;
 
   }
@@ -728,13 +729,30 @@ store.subscribe(function () {
 
 store.dispatch({
   type: "POST_BOOK",
-  payload: {
+  payload: [{
     id: 1,
     title: 'book title',
     description: 'book description here',
     price: 33.33
 
-  }
+  }, {
+    id: 2,
+    title: 'second book title',
+    description: 'second book description here',
+    price: 50.00
+
+  }]
+});
+
+store.dispatch({
+  type: "POST_BOOK",
+  payload: [{
+    id: 3,
+    title: '3rd book title',
+    description: '3rd book description here',
+    price: 100
+
+  }]
 });
 
 /***/ }),

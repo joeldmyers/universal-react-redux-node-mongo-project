@@ -4,11 +4,10 @@ import {createStore} from 'redux';
 
 // step 3 define reducers
 
-const reducer = function(state=[], action) {
+const reducer = function(state={books: []}, action) {
   switch(action.type) {
     case "POST_BOOK":
-      let books = state.concat(action.payload);
-      return books;
+      return {books: [...state.books, ...action.payload]};
       break;
 
   }

@@ -9,6 +9,19 @@ const reducer = function(state={books: []}, action) {
     case "POST_BOOK":
       return {books: [...state.books, ...action.payload]};
       break;
+    case "DELETE_BOOK":
+    // create copy of current array of books
+    const currentBookToDelete = [...state.books];
+    // determine which index the book should be deleted at
+    const indexToDelete = currentBookToDelete.findIndex(
+      function(book) {
+        return book.id === action.payload.id;
+      }
+    )
+
+    // use slice to remove the book at the specified indexToDelete
+    return {books: [...currentBookToDelete.slice(0, indexToDelete), ...currentBookToDelete.slice(indexToDelete + 1)]};
+    break;
 
   }
   return state;
@@ -45,13 +58,9 @@ store.dispatch({
   });
 
   store.dispatch({
-    type:"POST_BOOK",
+    type:"DELETE_BOOK",
     payload:
-      [{
-        id: 3,
-        title: '3rd book title',
-        description: '3rd book description here',
-        price: 100
-
-      }]
+      {
+        id: 1
+      }
     });

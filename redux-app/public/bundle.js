@@ -713,6 +713,17 @@ var reducer = function reducer() {
     case "POST_BOOK":
       return { books: [].concat(_toConsumableArray(state.books), _toConsumableArray(action.payload)) };
       break;
+    case "DELETE_BOOK":
+      // create copy of current array of books
+      var currentBookToDelete = [].concat(_toConsumableArray(state.books));
+      // determine which index the book should be deleted at
+      var indexToDelete = currentBookToDelete.findIndex(function (book) {
+        return book.id === action.payload.id;
+      });
+
+      // use slice to remove the book at the specified indexToDelete
+      return { books: [].concat(_toConsumableArray(currentBookToDelete.slice(0, indexToDelete)), _toConsumableArray(currentBookToDelete.slice(indexToDelete + 1))) };
+      break;
 
   }
   return state;
@@ -746,14 +757,10 @@ store.dispatch({
 });
 
 store.dispatch({
-  type: "POST_BOOK",
-  payload: [{
-    id: 3,
-    title: '3rd book title',
-    description: '3rd book description here',
-    price: 100
-
-  }]
+  type: "DELETE_BOOK",
+  payload: {
+    id: 1
+  }
 });
 
 /***/ }),
